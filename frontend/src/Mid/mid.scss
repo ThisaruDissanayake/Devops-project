@@ -1,0 +1,141 @@
+:root{
+    --PrimaryColor: hsl(199, 100%, 33%);
+    --SecondaryColor: hsl(187, 85%, 43%);
+    --gradientColor: linear-gradient(to right, hsl(187,85%, 43%), hsl(199, 100%, 33%));
+    --whiteColor: hsl(0, 8%, 100%);
+    --blackColor: hsl(201, 33%, 16%);
+    --textColor: hsl(249, 4%, 36%);
+    --whiteColorDeam: hsl(0, 0%, 93%);
+    --greyText: rgb(190, 190, 190);
+    --inputColor: rgb(239, 239, 239);
+    --bodyColor: rgb(233, 233, 255);
+    --cardBG: rgb(225, 225, 235);
+    --cardHover: rgb(255,255,255);
+    }
+
+.main1{
+    width: 100%;
+
+    .secTitle1{
+        .title{
+     
+            width: max-content;
+            color: var(--PrimaryColor);
+            justify-content: center;
+            margin: 1rem 1rem 1rem 31rem;
+           
+
+            &::after {
+                height: 5px;
+                width: 120px;
+                right: 0;
+                bottom: 5px;
+              
+            }
+        }
+    }
+    .secContent1{
+        margin-bottom: 50px;
+        justify-content: center;
+        gap: 1.5rem;
+
+        .singleDestination {
+            height: 100%;
+            display: grid;
+            row-gap: 10px  ;
+            border-radius: 10px;
+            align-items: center;
+            background: var(--cardBG);
+            box-shadow: 0 2px 4px rgba(140, 140, 141,0.54);
+            overflow: hidden;
+            &:hover{
+                background: var(--cardHover) ;
+                box-shadow: 1.4px 4px rgba(85,85,85,0.54);
+                transition: 0.3s ease;
+
+            }
+
+            .imageDiv{
+                height: 400px;
+                width: 400px;
+                overflow: hidden;
+                img{
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                    transition: 2s ease;
+
+                }
+
+                &:hover{
+                    img{
+                        transform: scale(1.1);
+                    }
+                }
+            }
+            .cardInfo{
+                padding: 1rem;
+                .Name{
+                    color: var(--blueColor);
+                    font-size: 1.75rem;
+                }
+                .Name1{
+                    color: var(--blackColor);
+                    font-size: 1.25rem;
+                }
+
+           
+                    }
+                }
+
+
+            }
+
+
+        }
+
+    
+
+@media screen and (min-width:500PX) {
+    .title{
+        font-size: 1.5rem;
+        &::after{
+            width: 155px !important;
+        }
+    }
+
+    .secContent1{
+        grid-template-columns: repeat(2,1fr);
+
+        .singleDestination{
+            height: auto;
+        }
+    }
+    
+}
+
+@media screen and (min-width:840PX) {
+    
+
+    .secContent1{
+        grid-template-columns: repeat(3,1fr);
+
+        .singleDestination{
+            height: auto;
+        }
+    }
+   
+}
+@media screen and (min-width:1240PX) {
+    
+
+    .secContent1{
+        grid-template-columns: repeat(3,1fr);
+
+        .singleDestination{
+            height: auto;
+        }
+    }
+   
+}
+    
