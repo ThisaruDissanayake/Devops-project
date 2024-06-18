@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_REGISTRY = "your-docker-registry"  // Replace with your Docker registry URL if needed
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,18 +14,32 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    docker.withRegistry('','') {
-                        docker.build('mern-backend', './backend')
-                        docker.build('mern-frontend', './frontend')
-                    }
+                    def dockerImageBackend = docker.build("${DOCKER_REGISTRY}/mern-backend", './backend')
+                    def dockerImageFrontend = docker.build("${DOCKER_REGISTRY}/mern-frontend", './frontend')
+                    
+                    dockerImageBackend.push()
+                    dockerImageFrontend.push()
                 }
             }
         }
         stage('Deploy') {
             steps {
-                bat 'docker-compose down'
-                bat 'docker-compose up -d --build'
+                script {
+                    docker.withRegistry('', 'docker-credentials-id') {
+                        bat 'docker-compose down'
+                        bat 'docker-compose up -d --build'
+                    }
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
