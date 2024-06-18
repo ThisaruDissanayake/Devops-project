@@ -10,8 +10,10 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    docker.build('mern-backend', './backend')
-                    docker.build('mern-frontend', './frontend')
+                    docker.withRegistry('','') {
+                        docker.build('mern-backend', './backend')
+                        docker.build('mern-frontend', './frontend')
+                    }
                 }
             }
         }
