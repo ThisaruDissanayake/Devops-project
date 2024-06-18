@@ -1,16 +1,18 @@
 # Use the official Node.js image
-FROM node:14
+FROM node:20
 
-# Create and change to the app directory
+# Create app directory
 WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy app source code
+# Bundle app source
 COPY . .
 
-# Expose port and start the application
+# Bind to port
 EXPOSE 5555
+
+# Start the app
 CMD ["npm", "start"]

@@ -1,8 +1,9 @@
-version: '3'
+version: '3.8'
+
 services:
   mongo:
     image: mongo
-    container_name: mongo
+    container_name: mern_mongo  # Renamed from 'mongo' to 'mern_mongo'
     ports:
       - "27017:27017"
     volumes:
@@ -12,17 +13,17 @@ services:
     build: ./backend
     container_name: backend
     ports:
-      - "5555:5555"
+      - "5566:5555"  # Changed from 5555:5555 to 5566:5555
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/mern-app
+      - MONGO_URI=mongodb://mern_mongo:27017/mern-app  # Updated to use 'mern_mongo'
 
   frontend:
     build: ./frontend
     container_name: frontend
     ports:
-      - "5174:80"
+      - "5173:80"
     depends_on:
       - backend
 

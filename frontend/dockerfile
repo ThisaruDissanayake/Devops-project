@@ -1,29 +1,24 @@
-# Use the official Node.js image with a compatible version
-FROM node:18
+# Use the official Node.js image
+FROM node:20
 
-# Create and change to the app directory
+# Create app directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Install app dependencies
 COPY package*.json ./
-
-# Clean npm cache and install app dependencies
-RUN npm cache clean --force
 RUN npm install
 
-# Ensure browserslist database is updated
-RUN npx browserslist@latest --update-db
-
-# Copy app source code
+# Bundle app source
 COPY . .
 
 # Build the app
 RUN npm run build
 
-# Use nginx to serve the build files
-FROM nginx:alpine
-COPY --from=0 /usr/src/app/dist /usr/share/nginx/html
+# Install serve to serve the build
+RUN npm install -g serve
 
-# Expose port
+# Bind to port
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Start the app
+CMD ["serve", "-s", "build"]
