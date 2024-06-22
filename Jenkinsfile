@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = "your-docker-registry"  // Replace with your Docker registry URL if needed
+        DOCKER_IMAGE = 'hashithNode'
+        DOCKER_TAG = 'latest'
+        DOCKER_REPO = 'hashith/node_devops'
     }
 
     stages {
@@ -11,35 +13,25 @@ pipeline {
                 git 'https://github.com/ThisaruDissanayake/Devops-project.git'
             }
         }
-        stage('Build Docker Images') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
-                    def dockerImageBackend = docker.build("${DOCKER_REGISTRY}/mern-backend", './backend')
-                    def dockerImageFrontend = docker.build("${DOCKER_REGISTRY}/mern-frontend", './frontend')
-                    
-                    dockerImageBackend.push()
-                    dockerImageFrontend.push()
+                    sh "docker build -t ${mitd0011/devproject}:${DOCKER_TAG} ."
                 }
             }
         }
-        stage('Deploy') {
+
+        stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-credentials-id') {
-                        bat 'docker-compose down'
-                        bat 'docker-compose up -d --build'
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
                     }
+                    sh "docker push ${mitd0011/devproject}:${DOCKER_TAG}"
                 }
             }
         }
     }
 
-    post {
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed!'
-        }
-    }
 }
