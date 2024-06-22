@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'hashithNode'
+        DOCKER_IMAGE = 'maleeshaNode'
         DOCKER_TAG = 'latest'
-        DOCKER_REPO = 'hashith/node_devops'
+        DOCKER_REPO = 'mitd0011/devproject'
     }
 
     stages {
@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${mitd0011/devproject}:${DOCKER_TAG} ."
+                    sh "docker build -t ${DOCKER_REPO}:${DOCKER_TAG} ."
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
                     }
-                    sh "docker push ${mitd0011/devproject}:${DOCKER_TAG}"
+                    sh "docker push ${DOCKER_REPO}:${DOCKER_TAG}"
                 }
             }
         }
